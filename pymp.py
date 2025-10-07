@@ -6,6 +6,7 @@ import requests
 
 __version__ = "v1.0"
 
+
 def get_latest_release_tag():
     try:
         url = "https://api.github.com/repos/cells-OSS/pymp/releases/latest"
@@ -54,6 +55,7 @@ def download_youtube_mp3(youtube_url, output_path):
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
 
+
 def download_youtube_mp4(youtube_url, output_path):
     try:
         yt_dlp_cmd = 'yt-dlp.exe' if os.name == 'nt' else 'yt-dlp'
@@ -66,6 +68,7 @@ def download_youtube_mp4(youtube_url, output_path):
         print(f"Video downloaded and saved as {output_path}")
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
+
 
 if os.path.exists("auto-update.conf"):
     if is_update_available(__version__):
@@ -132,8 +135,12 @@ print(settingsMenu)
 
 settings_choice = input("Which option would you like to choose(1)?: ")
 
+if settings_choice.lower() == "back":
+    subprocess.Popen([sys.executable] + sys.argv)
+    sys.exit()
+
 if settings_choice == '1':
-    
+
     with open("auto-update.conf", "wb") as updateSetting:
         updateSetting.write("True".encode())
     print("Auto-update is now enabled.")
