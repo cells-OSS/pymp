@@ -4,7 +4,7 @@ import sys
 from packaging import version
 import requests
 
-__version__ = "v1.0"
+__version__ = "v1.1"
 
 
 def get_latest_release_tag():
@@ -75,69 +75,64 @@ if os.path.exists("auto-update.conf"):
         print("New version available!")
         download_latest_script()
 
-welcomeMessage = """
-===========================================
-  Welcome to the YouTube Downloader!
+if os.path.exists("welcome_message.conf"):
+    with open("welcome_message.conf", "rb") as configFile:
+        welcomeMessage = configFile.read().decode()
+else:
+    welcomeMessage = """
+    ===============WELCOME===============
+    """
 
+menu = """
   1. Download MP3 (Audio)
   2. Download MP4 (Video)
   3. Settings
   
   TIP: To come back to this menu at any time, just type "back".
-===========================================
 """
-print(welcomeMessage)
-choice = input("Which option would you like to choose(1/2)?: ")
+print(welcomeMessage, menu)
+choice = input("Which option would you like to choose(1/2/3)?: ")
 
 if choice == '1':
     youtube_url = input("Enter the YouTube URL: ")
 
     if youtube_url.lower() == "back":
-        subprocess.Popen([sys.executable] + sys.argv)
-        sys.exit()
+       os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    output_path = input("Enter the output file path (e.g., 'output.mp3'): ")
+    output_path = input("Enter the output file path (include 'output.mp3'): ")
 
     if output_path.lower() == "back":
-        subprocess.Popen([sys.executable] + sys.argv)
-        sys.exit()
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 
     download_youtube_mp3(youtube_url, output_path)
 if choice == '2':
     youtube_url = input("Enter the YouTube URL: ")
 
     if youtube_url.lower() == "back":
-        subprocess.Popen([sys.executable] + sys.argv)
-        sys.exit()
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    output_path = input("Enter the output file path (e.g., 'output.mp4'): ")
+    output_path = input("Enter the output file path (include 'output.mp4'): ")
 
     if output_path.lower() == "back":
-        subprocess.Popen([sys.executable] + sys.argv)
-        sys.exit()
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 
     download_youtube_mp4(youtube_url, output_path)
-else:
-    print("Invalid choice.")
-    input("Press Enter to continue...")
-    subprocess.Popen([sys.executable] + sys.argv)
-    sys.exit()
 
 if choice == '3':
     settingsMenu = """
 ===========================================
             Settings Menu
-    1. Turn auto-update on or off
+    1 = Turn auto-update on or off
+    2 = Change welcome message
 ===========================================
 """
 
 print(settingsMenu)
 
-settings_choice = input("Which option would you like to choose(1)?: ")
+settings_choice = input("Which option would you like to choose(1/2)?: ")
 
 if settings_choice.lower() == "back":
-    subprocess.Popen([sys.executable] + sys.argv)
-    sys.exit()
+    os.execv(sys.executable, [sys.executable] + sys.argv)
 
 if settings_choice == '1':
 
@@ -145,5 +140,18 @@ if settings_choice == '1':
         updateSetting.write("True".encode())
     print("Auto-update is now enabled.")
     input("Press Enter to continue...")
-    subprocess.Popen([sys.executable] + sys.argv)
-    sys.exit()
+    os.execv(sys.executable, [sys.executable] + sys.argv)
+
+if settings_choice == '2':
+    new_welcome_message = input(
+        "New welcome message(use \\n for new lines): ")
+    with open("welcome_message.conf", "w", encoding="utf-8") as f:
+        f.write(new_welcome_message.replace("\\n", "\n"))
+    print("Welcome message updated.")
+    input("Press Enter to continue...")
+    os.execv(sys.executable, [sys.executable] + sys.argv)
+
+else:
+    print("Invalid choice.")
+    input("Press Enter to continue...")
+    os.execv(sys.executable, [sys.executable] + sys.argv)
