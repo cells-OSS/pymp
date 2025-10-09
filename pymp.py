@@ -3,8 +3,9 @@ import os
 import sys
 from packaging import version
 import requests
+import pyfiglet
 
-__version__ = "v1.1"
+__version__ = "v1.2"
 
 
 def get_latest_release_tag():
@@ -75,6 +76,7 @@ if os.path.exists("auto-update.conf"):
         print("New version available!")
         download_latest_script()
 
+
 if os.path.exists("welcome_message.conf"):
     with open("welcome_message.conf", "rb") as configFile:
         welcomeMessage = configFile.read().decode()
@@ -82,6 +84,12 @@ else:
     welcomeMessage = """
     ===============WELCOME===============
     """
+
+if os.path.exists("figlet.conf"):
+    with open("figlet.conf", "rb") as figlet_configFile:
+        figlet_config = figlet_configFile.read().decode()
+        if figlet_config == "True":
+            welcomeMessage = pyfiglet.figlet_format(welcomeMessage)
 
 menu = """
   1. Download MP3 (Audio)
@@ -124,12 +132,13 @@ if choice == '3':
             Settings Menu
     1 = Turn auto-update on or off
     2 = Change welcome message
+    3 = Turn fgilet welcome message on or off
 ===========================================
 """
 
 print(settingsMenu)
 
-settings_choice = input("Which option would you like to choose(1/2)?: ")
+settings_choice = input("Which option would you like to choose(1/2/3)?: ")
 
 if settings_choice.lower() == "back":
     os.execv(sys.executable, [sys.executable] + sys.argv)
@@ -155,3 +164,25 @@ else:
     print("Invalid choice.")
     input("Press Enter to continue...")
     os.execv(sys.executable, [sys.executable] + sys.argv)
+
+if settings_choice == '3':
+    figlet_welcome = """
+    ================PYGLET================
+    1 = Turn on figlet welcome message
+    2 = Turn off figlet welcome message
+    =======================================
+    """
+    print(figlet_welcome)
+
+    figlet_choice = input("Which option would you like to choose(1/2)?: ")
+    if figlet_choice.lower() == "back":
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+    if figlet_choice == '1':
+        with open("figlet.conf", "wb") as figletSetting:
+            figletSetting.write("True".encode())
+    if figlet_choice == '2':
+        if os.path.exists("figlet.conf"):
+            os.remove("figlet.conf")
+        print("Figlet welcome message is now disabled.")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
