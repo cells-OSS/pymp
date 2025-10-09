@@ -97,7 +97,7 @@ if choice == '1':
     youtube_url = input("Enter the YouTube URL: ")
 
     if youtube_url.lower() == "back":
-       os.execv(sys.executable, [sys.executable] + sys.argv)
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 
     output_path = input("Enter the output file path (include 'output.mp3'): ")
 
