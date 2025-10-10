@@ -107,24 +107,24 @@ if choice == '1':
     if youtube_url.lower() == "back":
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    output_path = input("Enter the output file path (include 'output.mp3'): ")
+    output_path = input("Enter the output file path: ")
 
     if output_path.lower() == "back":
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    download_youtube_mp3(youtube_url, output_path)
+    download_youtube_mp3(youtube_url, output_path + ".mp3")
 if choice == '2':
     youtube_url = input("Enter the YouTube URL: ")
 
     if youtube_url.lower() == "back":
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    output_path = input("Enter the output file path (include 'output.mp4'): ")
+    output_path = input("Enter the output file path: ")
 
     if output_path.lower() == "back":
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    download_youtube_mp4(youtube_url, output_path)
+    download_youtube_mp4(youtube_url, output_path + ".mp4")
 
 if choice == '3':
     settingsMenu = """
