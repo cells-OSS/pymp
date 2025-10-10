@@ -112,7 +112,7 @@ if choice == '1':
     if output_path.lower() == "back":
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    download_youtube_mp3(youtube_url, output_path + ".mp3")
+    download_youtube_mp3(youtube_url, output_path + "pymp-output.mp3")
 if choice == '2':
     youtube_url = input("Enter the YouTube URL: ")
 
@@ -124,7 +124,7 @@ if choice == '2':
     if output_path.lower() == "back":
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    download_youtube_mp4(youtube_url, output_path + ".mp4")
+    download_youtube_mp4(youtube_url, output_path + "pymp-output.mp4")
 
 if choice == '3':
     settingsMenu = """
