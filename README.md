@@ -1,5 +1,5 @@
 # pymp
-A simple YouTube to mp3/mp4 converter written in Python.
+A simple YouTube to mp3/mp4 converter written in [Python](https://www.python.org/).
 
 # PREREQUISITES
 [Python](https://www.python.org/)
