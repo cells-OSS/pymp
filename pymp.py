@@ -54,9 +54,57 @@ def download_youtube_mp3(youtube_url, output_path):
             youtube_url
         ], check=True)
         print(f"Audio downloaded and saved as {output_path}")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
 
+def download_youtube_mp3_partial(youtube_url, output_path, start_time, end_time):
+    """
+    Download only a section as MP3 using yt-dlp's --download-sections and extract audio.
+    start_time / end_time accept formats like SS, MM:SS or HH:MM:SS.
+    """
+    yt_dlp_cmd = 'yt-dlp.exe' if os.name == 'nt' else 'yt-dlp'
+    ffmpeg_cmd = 'ffmpeg.exe' if os.name == 'nt' else 'ffmpeg'
+
+    # normalize path, ensure .mp3 extension, create parent dir if possible
+    output_path = os.path.expanduser(output_path)
+    output_path = os.path.abspath(output_path)
+    if not output_path.lower().endswith(".mp3"):
+        output_path += ".mp3"
+    parent = os.path.dirname(output_path) or "."
+
+    if parent and not os.path.exists(parent):
+        try:
+            os.makedirs(parent, exist_ok=True)
+        except PermissionError:
+            print(f"Permission denied creating '{parent}'. Falling back to current directory.")
+            output_path = os.path.basename(output_path)
+
+    # require yt-dlp and ffmpeg (yt-dlp uses ffmpeg to extract)
+    if shutil.which(yt_dlp_cmd) is None:
+        print("yt-dlp not found. Please install yt-dlp and ensure it's on your PATH.")
+        return
+    if shutil.which(ffmpeg_cmd) is None:
+        print("ffmpeg not found. Please install ffmpeg and ensure it's on your PATH.")
+        return
+
+    cmd = [
+        yt_dlp_cmd,
+        "--download-sections", f"*{start_time}-{end_time}",
+        "-x", "--audio-format", "mp3",
+        "-o", output_path,
+        youtube_url
+    ]
+    try:
+        subprocess.run(cmd, check=True)
+        print(f"Trimmed audio saved to: {output_path}")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+    except subprocess.CalledProcessError as e:
+        print("yt-dlp failed:", e)
+    except PermissionError as e:
+        print("Permission error:", e)
 
 def download_youtube_mp4(youtube_url, output_path):
     try:
@@ -68,13 +116,17 @@ def download_youtube_mp4(youtube_url, output_path):
             youtube_url
         ], check=True)
         print(f"Video downloaded and saved as {output_path}")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
 
 def download_youtube_mp4_partial(youtube_url, output_path, start_time, end_time):
     yt_dlp = "yt-dlp.exe" if os.name == "nt" else "yt-dlp"
     subprocess.run([yt_dlp, "--download-sections", f"*{start_time}-{end_time}", "-t", "mp4", "-o", output_path, youtube_url], check=True)
-
+    print(f"Trimmed video downloaded and saved as {output_path}")
+    input("Press Enter to continue...")
+    os.execv(sys.executable, [sys.executable] + sys.argv)
 
 def convert_mp4_to_mp3(input_file, output_file, bitrate="192k"):
     """
@@ -105,6 +157,8 @@ def convert_mp4_to_mp3(input_file, output_file, bitrate="192k"):
     try:
         subprocess.run(cmd, check=True)
         print(f"Converted '{input_file}' -> '{output_file}'")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
     except subprocess.CalledProcessError as e:
         print("ffmpeg failed:", e)
 
@@ -141,17 +195,54 @@ print(welcomeMessage, menu)
 choice = input("Which option would you like to choose(1/2/3)?: ")
 
 if choice == '1':
-    youtube_url = input("Enter the YouTube URL: ")
-
-    if youtube_url.lower() == "back":
+    mp3downloadMenu = """
+===========================================
+        MP3 Download Options
+1 = Download the entire audio
+2 = Download a specific part of the audio
+===========================================
+"""
+    print(mp3downloadMenu)
+    mp3download_choice = input("Which option would you like to choose(1/2)?: ")
+    if mp3download_choice.lower() == "back":
         os.execv(sys.executable, [sys.executable] + sys.argv)
+    if mp3download_choice == '1':
+        youtube_url = input("Enter the YouTube URL: ")
 
-    output_path = input("Enter the output file path: ")
+        if youtube_url.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    if output_path.lower() == "back":
-        os.execv(sys.executable, [sys.executable] + sys.argv)
+        output_path = input("Enter the output file path: ")
 
-    download_youtube_mp3(youtube_url, output_path + "pymp-output.mp3")
+        if output_path.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        download_youtube_mp3(youtube_url, output_path + "pymp-output.mp3")
+
+    if mp3download_choice == '2':
+        youtube_url = input("Enter the YouTube URL: ")
+
+        if youtube_url.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        output_path = input("Enter the output file path: ")
+
+        if output_path.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        start_time = input("Enter the start time (in seconds or HH:MM:SS): ")
+
+        if start_time.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        end_time = input("Enter the end time (in seconds or HH:MM:SS): ")
+
+        if end_time.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        download_youtube_mp3_partial(youtube_url, output_path + "pymp-output.mp3", start_time, end_time)
+
+
 if choice == '2':
     mp4downloadMenu = """
 ===========================================
