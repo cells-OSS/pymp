@@ -6,7 +6,7 @@ import requests
 import pyfiglet
 import shutil
 
-__version__ = "v1.4"
+__version__ = "v1.3"
 
 
 def get_latest_release_tag():
