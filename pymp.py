@@ -4,8 +4,9 @@ import sys
 from packaging import version
 import requests
 import pyfiglet
+import shutil
 
-__version__ = "v1.3"
+__version__ = "v1.4"
 
 
 def get_latest_release_tag():
@@ -71,6 +72,39 @@ def download_youtube_mp4(youtube_url, output_path):
         print(f"An error occurred: {e}")
 
 
+def convert_mp4_to_mp3(input_file, output_file, bitrate="192k"):
+    """
+    Convert an MP4 (or other video file) to .mp3 using ffmpeg.
+    Requires ffmpeg on PATH or ffmpeg.exe on Windows.
+    """
+    ffmpeg_cmd = 'ffmpeg.exe' if os.name == 'nt' else 'ffmpeg'
+    if shutil.which(ffmpeg_cmd) is None:
+        print("ffmpeg not found. Please install ffmpeg and ensure it's on your PATH.")
+        return
+
+    if not os.path.exists(input_file):
+        print("Input file does not exist:", input_file)
+        return
+
+    if not output_file.lower().endswith(".mp3"):
+        output_file += ".mp3"
+
+    cmd = [
+        ffmpeg_cmd,
+        "-y",           # overwrite output without asking
+        "-i", input_file,
+        "-vn",          # no video
+        "-ab", bitrate,  # audio bitrate
+        "-ar", "44100",  # audio sampling rate
+        output_file
+    ]
+    try:
+        subprocess.run(cmd, check=True)
+        print(f"Converted '{input_file}' -> '{output_file}'")
+    except subprocess.CalledProcessError as e:
+        print("ffmpeg failed:", e)
+
+
 if os.path.exists("auto-update.conf"):
     if is_update_available(__version__):
         print("New version available!")
@@ -94,7 +128,8 @@ if os.path.exists("figlet.conf"):
 menu = """
   1. Download MP3 (Audio)
   2. Download MP4 (Video)
-  3. Settings
+  3. Convert MP4 (Video) to MP3 (Audio)
+  4. Settings
   
   TIP: To come back to this menu at any time, just type "back".
 """
@@ -127,6 +162,21 @@ if choice == '2':
     download_youtube_mp4(youtube_url, output_path + "pymp-output.mp4")
 
 if choice == '3':
+    input_file = input("Enter path to the MP4 file: ")
+    if input_file.lower() == "back":
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+
+    output_file = input("Enter desired output MP3 path (or name): ")
+    if output_file.lower() == "back":
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+
+    convert_mp4_to_mp3(input_file, output_file)
+    print("Conversion complete.")
+    input("Press Enter to continue...")
+    os.execv(sys.executable, [sys.executable] + sys.argv)
+
+
+if choice == '4':
     settingsMenu = """
 ===========================================
             Settings Menu
