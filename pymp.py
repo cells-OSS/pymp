@@ -71,6 +71,10 @@ def download_youtube_mp4(youtube_url, output_path):
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
 
+def download_youtube_mp4_partial(youtube_url, output_path, start_time, end_time):
+    yt_dlp = "yt-dlp.exe" if os.name == "nt" else "yt-dlp"
+    subprocess.run([yt_dlp, "--download-sections", f"*{start_time}-{end_time}", "-t", "mp4", "-o", output_path, youtube_url], check=True)
+
 
 def convert_mp4_to_mp3(input_file, output_file, bitrate="192k"):
     """
@@ -149,17 +153,56 @@ if choice == '1':
 
     download_youtube_mp3(youtube_url, output_path + "pymp-output.mp3")
 if choice == '2':
-    youtube_url = input("Enter the YouTube URL: ")
+    mp4downloadMenu = """
+===========================================
+        MP4 Download Options
+1 = Download the entire video
+2 = Download a specific part of the video
+===========================================
+"""
+    print(mp4downloadMenu)
+    mp4download_choice = input("Which option would you like to choose(1/2)?: ")
 
-    if youtube_url.lower() == "back":
+    if mp4download_choice.lower() == "back":
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    output_path = input("Enter the output file path: ")
+    if mp4download_choice == '1':
 
-    if output_path.lower() == "back":
-        os.execv(sys.executable, [sys.executable] + sys.argv)
+        youtube_url = input("Enter the YouTube URL: ")
 
-    download_youtube_mp4(youtube_url, output_path + "pymp-output.mp4")
+        if youtube_url.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        output_path = input("Enter the output file path: ")
+
+        if output_path.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        download_youtube_mp4(youtube_url, output_path + "pymp-output.mp4")
+
+    if mp4download_choice == '2':
+        youtube_url = input("Enter the YouTube URL: ")
+        
+        if youtube_url.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        output_path = input("Enter the output file path: ")
+
+        if output_path.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        start_time = input("Enter the start time (in seconds or HH:MM:SS): ")
+
+        if start_time.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        end_time = input("Enter the end time (in seconds or HH:MM:SS): ")
+
+        if end_time.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        download_youtube_mp4_partial(youtube_url, output_path + "pymp-output.mp4", start_time, end_time)
+
 
 if choice == '3':
     input_file = input("Enter path to the MP4 file: ")
