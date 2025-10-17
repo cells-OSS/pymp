@@ -242,6 +242,11 @@ if choice == '1':
 
         download_youtube_mp3_partial(youtube_url, output_path + "pymp-output.mp3", start_time, end_time)
 
+    else:
+        print("Invalid choice.")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+
 
 if choice == '2':
     mp4downloadMenu = """
@@ -294,6 +299,11 @@ if choice == '2':
 
         download_youtube_mp4_partial(youtube_url, output_path + "pymp-output.mp4", start_time, end_time)
 
+    else:
+        print("Invalid choice.")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+
 
 if choice == '3':
     input_file = input("Enter path to the MP4 file: ")
@@ -320,53 +330,56 @@ if choice == '4':
 ===========================================
 """
 
-print(settingsMenu)
+    print(settingsMenu)
 
-settings_choice = input("Which option would you like to choose(1/2/3)?: ")
+    settings_choice = input("Which option would you like to choose(1/2/3)?: ")
 
-if settings_choice.lower() == "back":
-    os.execv(sys.executable, [sys.executable] + sys.argv)
+    if settings_choice.lower() == "back":
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 
-if settings_choice == '1':
+    if settings_choice == '1':
 
-    with open("auto-update.conf", "wb") as updateSetting:
-        updateSetting.write("True".encode())
-    print("Auto-update is now enabled.")
-    input("Press Enter to continue...")
-    os.execv(sys.executable, [sys.executable] + sys.argv)
+        with open("auto-update.conf", "wb") as updateSetting:
+            updateSetting.write("True".encode())
+        print("Auto-update is now enabled.")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 
-if settings_choice == '2':
-    new_welcome_message = input(
-        "New welcome message(use \\n for new lines): ")
-    with open("welcome_message.conf", "w", encoding="utf-8") as f:
-        f.write(new_welcome_message.replace("\\n", "\n"))
-    print("Welcome message updated.")
-    input("Press Enter to continue...")
-    os.execv(sys.executable, [sys.executable] + sys.argv)
+    if settings_choice == '2':
+        new_welcome_message = input(
+            "New welcome message(use \\n for new lines): ")
+        with open("welcome_message.conf", "w", encoding="utf-8") as f:
+            f.write(new_welcome_message.replace("\\n", "\n"))
+        print("Welcome message updated.")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 
+    if settings_choice == '3':
+        figlet_welcome = """
+        ================PYGLET================
+        1 = Turn on figlet welcome message
+        2 = Turn off figlet welcome message
+        =======================================
+        """
+        print(figlet_welcome)
+
+        figlet_choice = input("Which option would you like to choose(1/2)?: ")
+        if figlet_choice.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+        if figlet_choice == '1':
+            with open("figlet.conf", "wb") as figletSetting:
+                figletSetting.write("True".encode())
+        if figlet_choice == '2':
+            if os.path.exists("figlet.conf"):
+                os.remove("figlet.conf")
+            print("Figlet welcome message is now disabled.")
+            input("Press Enter to continue...")
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+    else:
+        print("Invalid choice.")
+        input("Press Enter to continue...")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
 else:
     print("Invalid choice.")
     input("Press Enter to continue...")
     os.execv(sys.executable, [sys.executable] + sys.argv)
-
-if settings_choice == '3':
-    figlet_welcome = """
-    ================PYGLET================
-    1 = Turn on figlet welcome message
-    2 = Turn off figlet welcome message
-    =======================================
-    """
-    print(figlet_welcome)
-
-    figlet_choice = input("Which option would you like to choose(1/2)?: ")
-    if figlet_choice.lower() == "back":
-        os.execv(sys.executable, [sys.executable] + sys.argv)
-    if figlet_choice == '1':
-        with open("figlet.conf", "wb") as figletSetting:
-            figletSetting.write("True".encode())
-    if figlet_choice == '2':
-        if os.path.exists("figlet.conf"):
-            os.remove("figlet.conf")
-        print("Figlet welcome message is now disabled.")
-        input("Press Enter to continue...")
-        os.execv(sys.executable, [sys.executable] + sys.argv)
