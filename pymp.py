@@ -339,11 +339,37 @@ if choice == '4':
 
     if settings_choice == '1':
 
-        with open("auto-update.conf", "wb") as updateSetting:
-            updateSetting.write("True".encode())
-        print("Auto-update is now enabled.")
-        input("Press Enter to continue...")
-        os.execv(sys.executable, [sys.executable] + sys.argv)
+        auto_update_menu = """
+    ===============AUTO-UPDATE===============
+    1 = Turn on
+    2 = Turn off
+    =========================================
+    """
+        print(auto_update_menu)
+
+        auto_update_choice = input("Which option would you like to choose(1/2)?: ")
+
+        if auto_update_choice.lower() == "back":
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        if auto_update_choice == '1':
+            with open("auto-update.conf", "wb") as updateSetting:
+                updateSetting.write("True".encode())
+            print("Auto-update is now enabled.")
+            input("Press Enter to continue...")
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        if auto_update_choice == '2':
+            if os.path.exists("auto-update.conf"):
+                os.remove("auto-update.conf")
+            print("Auto-update is now disabled.")
+            input("Press Enter to continue...")
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+        
+        else:
+            print("Invalid choice.")
+            input("Press Enter to continue...")
+            os.execv(sys.executable, [sys.executable] + sys.argv)
 
     if settings_choice == '2':
         new_welcome_message = input(
