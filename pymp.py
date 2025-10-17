@@ -6,7 +6,7 @@ import requests
 import pyfiglet
 import shutil
 
-__version__ = "v1.5"
+__version__ = "v1.6"
 
 
 def get_latest_release_tag():
@@ -192,7 +192,7 @@ menu = """
   TIP: To come back to this menu at any time, just type "back".
 """
 print(welcomeMessage, menu)
-choice = input("Which option would you like to choose(1/2/3)?: ")
+choice = input("Which option would you like to choose(1/2/3/4)?: ")
 
 if choice == '1':
     mp3downloadMenu = """
