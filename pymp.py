@@ -162,23 +162,33 @@ def convert_mp4_to_mp3(input_file, output_file, bitrate="192k"):
     except subprocess.CalledProcessError as e:
         print("ffmpeg failed:", e)
 
+if os.name == "nt":
+    config_dir = os.path.join(os.getenv("APPDATA"), "pymp")
+else:
+    config_dir = os.path.expanduser("~/.config/pymp")
 
-if os.path.exists("auto-update.conf"):
+os.makedirs(config_dir, exist_ok=True)
+
+welcomeMessage_config_path = os.path.join(config_dir, "welcome_message.conf")
+figlet_config_path = os.path.join(config_dir, "figlet.conf")
+auto_update_config_path = os.path.join(config_dir, "auto_update.conf")
+
+if os.path.exists(auto_update_config_path):
     if is_update_available(__version__):
         print("New version available!")
         download_latest_script()
 
 
-if os.path.exists("welcome_message.conf"):
-    with open("welcome_message.conf", "rb") as configFile:
+if os.path.exists(welcomeMessage_config_path):
+    with open(welcomeMessage_config_path, "rb") as configFile:
         welcomeMessage = configFile.read().decode()
 else:
     welcomeMessage = """
     ===============WELCOME===============
     """
 
-if os.path.exists("figlet.conf"):
-    with open("figlet.conf", "rb") as figlet_configFile:
+if os.path.exists(figlet_config_path):
+    with open(figlet_config_path, "rb") as figlet_configFile:
         figlet_config = figlet_configFile.read().decode()
         if figlet_config == "True":
             welcomeMessage = pyfiglet.figlet_format(welcomeMessage)
