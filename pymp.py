@@ -390,9 +390,11 @@ if choice == '4':
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
     if settings_choice == '2':
-        new_welcome_message = input(
-            "New welcome message(use \\n for new lines): ")
-        with open("welcome_message.conf", "w", encoding="utf-8") as f:
+        new_welcome_message = input("New welcome message(use \\n for new lines): ")
+
+        config_path = os.path.join(config_dir, "welcome_message.conf")
+
+        with open(config_path, "w", encoding="utf-8") as f:
             f.write(new_welcome_message.replace("\\n", "\n"))
         print("Welcome message updated.")
         input("Press Enter to continue...")
