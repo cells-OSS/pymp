@@ -410,17 +410,29 @@ if choice == '4':
         print(figlet_welcome)
 
         figlet_choice = input("Which option would you like to choose(1/2)?: ")
+        
         if figlet_choice.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
+
         if figlet_choice == '1':
-            with open("figlet.conf", "wb") as figletSetting:
+            config_path = os.path.join(config_dir, "figlet.conf")
+
+            with open(config_path, "wb") as figletSetting:
                 figletSetting.write("True".encode())
+
         if figlet_choice == '2':
-            if os.path.exists("figlet.conf"):
-                os.remove("figlet.conf")
-            print("Figlet welcome message is now disabled.")
-            input("Press Enter to continue...")
-            os.execv(sys.executable, [sys.executable] + sys.argv)
+            config_path = os.path.join(config_dir, "figlet.conf")
+
+            if os.path.exists(config_path):
+                os.remove(config_path)
+                print("Figlet welcome message is now disabled.")
+                input("Press Enter to continue...")
+                os.execv(sys.executable, [sys.executable] + sys.argv)
+            else:
+                print("Figlet welcome message is already disabled.")
+                input("Press Enter to continue...")
+                
+
     else:
         print("Invalid choice.")
         input("Press Enter to continue...")
