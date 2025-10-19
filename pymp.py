@@ -336,7 +336,8 @@ if choice == '4':
             Settings Menu
     1 = Turn auto-update on or off
     2 = Change welcome message
-    3 = Turn fgilet welcome message on or off
+    3 = Reset welcome message
+    4 = Turn fgilet welcome message on or off
 ===========================================
 """
 
@@ -401,6 +402,20 @@ if choice == '4':
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
     if settings_choice == '3':
+        config_path = os.path.join(config_dir, "welcome_message.conf")
+
+        if os.path.exists(config_path):
+            os.remove(config_path)
+            print("Welcome message have successfully been reset.")
+            input("Press Enter to continue...")
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+        else:
+            print("Welcome message is already the default.")
+            input("Press Enter to continue...")
+            os.execv(sys.executable, [sys.executable] + sys.argv)
+
+    if settings_choice == '4':
         figlet_welcome = """
         ================PYGLET================
         1 = Turn on figlet welcome message
@@ -431,7 +446,7 @@ if choice == '4':
             else:
                 print("Figlet welcome message is already disabled.")
                 input("Press Enter to continue...")
-                
+
 
     else:
         print("Invalid choice.")
