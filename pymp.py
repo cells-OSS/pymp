@@ -222,12 +222,12 @@ if choice == '1':
         if youtube_url.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
-        output_path = input("Enter the output file path: ")
+        output_path = input("Enter the output file path (include the name of the file): ")
 
         if output_path.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
-        download_youtube_mp3(youtube_url, output_path + "pymp-output.mp3")
+        download_youtube_mp3(youtube_url, output_path + ".mp3")
 
     if mp3download_choice == '2':
         youtube_url = input("Enter the YouTube URL: ")
