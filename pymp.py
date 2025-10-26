@@ -292,7 +292,7 @@ if choice == '2':
         if youtube_url.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
-        output_path = input("Enter the output file path: ")
+        output_path = input("Enter the output file path (include the name of the file): ")
 
         if output_path.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
@@ -307,7 +307,7 @@ if choice == '2':
         if end_time.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
-        download_youtube_mp4_partial(youtube_url, output_path + "pymp-output.mp4", start_time, end_time)
+        download_youtube_mp4_partial(youtube_url, output_path + ".mp4", start_time, end_time)
 
     else:
         print("Invalid choice.")
