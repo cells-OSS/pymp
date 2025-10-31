@@ -433,8 +433,7 @@ if choice == '4':
     if settings_choice == '4':
         figlet_welcome = """
         ================PYGLET================
-        1 = Turn on figlet welcome message
-        2 = Turn off figlet welcome message
+        1 = toggle figlet welcome message
         =======================================
         """
         print(figlet_welcome)
@@ -445,23 +444,10 @@ if choice == '4':
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
         if figlet_choice == '1':
-            config_path = os.path.join(config_dir, "figlet.conf")
-
-            with open(config_path, "wb") as figletSetting:
-                figletSetting.write("True".encode())
-
-        if figlet_choice == '2':
-            config_path = os.path.join(config_dir, "figlet.conf")
-
-            if os.path.exists(config_path):
-                os.remove(config_path)
-                print("Figlet welcome message is now disabled.")
-                input("Press Enter to continue...")
-                os.execv(sys.executable, [sys.executable] + sys.argv)
-            else:
-                print("Figlet welcome message is already disabled.")
-                input("Press Enter to continue...")
-
+            toggle_figlet()
+            print("Figlet welcome message setting toggled.")
+            input("Press Enter to continue...")
+            os.execv(sys.executable, [sys.executable] + sys.argv)
 
     else:
         print("Invalid choice.")
