@@ -1,7 +1,6 @@
 from logging import config
 import subprocess
 import json
-import logging
 import os
 import sys
 from packaging import version
