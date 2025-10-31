@@ -9,7 +9,7 @@ import requests
 import pyfiglet
 import shutil
 
-__version__ = "v1.8"
+__version__ = "v1.9"
 
 
 def get_latest_release_tag():
