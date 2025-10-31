@@ -384,8 +384,7 @@ if choice == '4':
 
         auto_update_menu = """
     ===============AUTO-UPDATE===============
-    1 = Turn on
-    2 = Turn off
+    1 = Toggle auto-updates
     =========================================
     """
         print(auto_update_menu)
@@ -396,29 +395,13 @@ if choice == '4':
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
         if auto_update_choice == '1':
-            config_path = os.path.join(config_dir, "auto_update.conf")
-
-            with open(config_path, "wb") as updateSetting:
-                updateSetting.write("True".encode())
+            toggle_auto_updates()
             print("Auto-update is now enabled.")
             input("Press Enter to continue...")
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
-        if auto_update_choice == '2':
-            config_path = os.path.join(config_dir, "auto_update.conf")
-            if os.path.exists(config_path):
-                os.remove(config_path)
-                print("Auto-update is now disabled.")
-                input("Press Enter to continue...")
-                os.execv(sys.executable, [sys.executable] + sys.argv)
-
-            else:
-                print("Auto-Updates are already disabled!")
-                input("Press Enter to continue...")
-                os.execv(sys.executable, [sys.executable] + sys.argv)
-        
         else:
-            print("Invalid choice.")
+            print("Auto-Updates are already disabled!")
             input("Press Enter to continue...")
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
