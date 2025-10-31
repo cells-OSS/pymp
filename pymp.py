@@ -1,4 +1,7 @@
+from logging import config
 import subprocess
+import json
+import logging
 import os
 import sys
 from packaging import version
@@ -203,12 +206,6 @@ def toggle_figlet():
 
 welcomeMessage_config_path = os.path.join(config_dir, "welcome_message.conf")
 
-if os.path.exists(auto_update_config_path):
-    if is_update_available(__version__):
-        print("New version available!")
-        download_latest_script()
-
-
 if os.path.exists(welcomeMessage_config_path):
     with open(welcomeMessage_config_path, "rb") as configFile:
         welcomeMessage = configFile.read().decode()
@@ -217,11 +214,16 @@ else:
     ===============WELCOME===============
     """
 
-if os.path.exists(figlet_config_path):
-    with open(figlet_config_path, "rb") as figlet_configFile:
-        figlet_config = figlet_configFile.read().decode()
-        if figlet_config == "True":
-            welcomeMessage = pyfiglet.figlet_format(welcomeMessage)
+if config["figlet_welcome"]:
+    welcomeMessage = pyfiglet.figlet_format(welcomeMessage)
+
+if config["auto_updates"]:
+    if is_update_available(__version__):
+        print("A new version of Pyculator is available!")
+        user_input = input(
+            "Would you like to download the latest version? (y/n): ").strip().lower()
+        if user_input == "y":
+            download_latest_script()
 
 menu = """
   1. Download MP3 (Audio)
