@@ -368,7 +368,7 @@ if choice == '4':
     1 = Turn auto-update on or off
     2 = Change welcome message
     3 = Reset welcome message
-    4 = Turn fgilet welcome message on or off
+    4 = Toggle figlet welcome message
 ===========================================
 """
 
@@ -432,8 +432,8 @@ if choice == '4':
     if settings_choice == '4':
         figlet_welcome = """
         ================PYGLET================
-        1 = toggle figlet welcome message
-        =======================================
+        1 = Toggle figlet welcome message
+        ======================================
         """
         print(figlet_welcome)
 
