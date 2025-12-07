@@ -179,8 +179,7 @@ for package in required_packages:
         print(f"Installing required package {package}...")
         install_packages(package)
 
-
-if os.name == nt: cls else: clear
+os.system('cls' if os.name == 'nt' else 'clear')
 
 from packaging import version
 import requests
