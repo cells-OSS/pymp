@@ -164,6 +164,24 @@ def convert_mp4_to_mp3(input_file, output_file, bitrate="192k"):
     except subprocess.CalledProcessError as e:
         print("ffmpeg failed:", e)
 
+
+def install_packages(package):
+    if os.name == 'nt':
+        subprocess.check_call(
+            [sys.executable, "-m", "pip", "install", package])
+    else:
+        subprocess.check_call(
+            [sys.executable, "-m", "pip", "install", package, "--break-system-packages"])
+
+
+required_packages = ["yt-dlp", "requests", "packaging"]
+for package in required_packages:
+    try:
+        __import__(package)
+    except ImportError:
+        print(f"Installing required package(s) {package}...")
+        install_packages(package)
+
 if os.name == "nt":
     config_dir = os.path.join(os.getenv("APPDATA"), "pymp")
 else:
