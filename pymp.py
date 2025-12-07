@@ -243,7 +243,9 @@ if os.path.exists(welcomeMessage_config_path):
         welcomeMessage = configFile.read().decode()
 else:
     welcomeMessage = """
-    ===============WELCOME===============
+    #####################################
+                WELCOME
+    #####################################
     """
 
 if config["figlet_welcome"]:
