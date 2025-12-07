@@ -417,10 +417,10 @@ if choice == '4':
     if settings_choice == '1':
 
         auto_update_menu = """
-    #########################################
-                Auto-Updates
-    1 = Toggle auto-updates
-    #########################################
+#########################################
+              Auto-Updates
+1 = Toggle auto-updates
+#########################################
     """
         print(auto_update_menu)
 
