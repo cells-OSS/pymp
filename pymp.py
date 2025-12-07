@@ -467,10 +467,10 @@ if choice == '4':
 
     if settings_choice == '4':
         figlet_welcome = """
-        ######################################
-                    Figlet Welcome
-        1 = Toggle figlet welcome message
-        ######################################
+######################################
+           Figlet Welcome
+1 = Toggle figlet welcome message
+######################################
         """
         print(figlet_welcome)
 
