@@ -183,6 +183,18 @@ def load_config():
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+config = load_config()
+
+def load_config():
+    path = os.path.join(config_dir, "config.json")
+    if not os.path.exists(path):
+        default = {"auto_updates": True, "figlet_welcome": False}
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(default, f, indent=4)
+        return default
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
 def save_config(config):
     with open(os.path.join(config_dir, "config.json"), "w", encoding="utf-8") as f:
         json.dump(config, f, indent=4)
