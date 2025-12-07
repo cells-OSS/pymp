@@ -3,9 +3,6 @@ import subprocess
 import json
 import os
 import sys
-from packaging import version
-import requests
-import pyfiglet
 import shutil
 
 __version__ = "v1.9"
@@ -174,7 +171,7 @@ def install_packages(package):
             [sys.executable, "-m", "pip", "install", package, "--break-system-packages"])
 
 
-required_packages = ["yt-dlp", "requests", "packaging"]
+required_packages = ["yt-dlp", "requests", "packaging", "pyfiglet"]
 for package in required_packages:
     try:
         __import__(package)
