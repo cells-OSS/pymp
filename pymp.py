@@ -326,11 +326,11 @@ if choice == '1':
 
 if choice == '2':
     mp4downloadMenu = """
-===========================================
+###########################################
         MP4 Download Options
 1 = Download the entire video
 2 = Download a specific part of the video
-===========================================
+###########################################
 """
     print(mp4downloadMenu)
     mp4download_choice = input("Which option would you like to choose(1/2)?: ")
