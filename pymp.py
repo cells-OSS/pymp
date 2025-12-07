@@ -272,11 +272,11 @@ choice = input("Which option would you like to choose(1/2/3/4)?: ")
 
 if choice == '1':
     mp3downloadMenu = """
-===========================================
+###########################################
         MP3 Download Options
 1 = Download the entire audio
 2 = Download a specific part of the audio
-===========================================
+###########################################
 """
     print(mp3downloadMenu)
     mp3download_choice = input("Which option would you like to choose(1/2)?: ")
