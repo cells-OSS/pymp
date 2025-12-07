@@ -179,6 +179,10 @@ for package in required_packages:
         print(f"Installing required package(s) {package}...")
         install_packages(package)
 
+from packaging import version
+import requests
+import pyfiglet
+
 if os.name == "nt":
     config_dir = os.path.join(os.getenv("APPDATA"), "pymp")
 else:
