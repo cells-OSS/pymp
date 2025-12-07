@@ -400,10 +400,10 @@ if choice == '4':
     settingsMenu = """
 ###########################################
             Settings Menu
-    1 = Turn auto-update on or off
-    2 = Change welcome message
-    3 = Reset welcome message
-    4 = Toggle figlet welcome message
+1 = Turn auto-update on or off
+2 = Change welcome message
+3 = Reset welcome message
+4 = Toggle figlet welcome message
 ###########################################
 """
 
