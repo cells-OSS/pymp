@@ -5,7 +5,7 @@ import os
 import sys
 import shutil
 
-__version__ = "v1.9"
+__version__ = "v2.0"
 
 
 def get_latest_release_tag():
@@ -253,7 +253,7 @@ if config["figlet_welcome"]:
 
 if config["auto_updates"]:
     if is_update_available(__version__):
-        print("A new version of Pyculator is available!")
+        print("A new version of pymp is available!")
         user_input = input(
             "Would you like to download the latest version? (y/n): ").strip().lower()
         if user_input == "y":
