@@ -260,12 +260,12 @@ if config["auto_updates"]:
             download_latest_script()
 
 menu = """
-  1. Download MP3 (Audio)
-  2. Download MP4 (Video)
-  3. Convert MP4 (Video) to MP3 (Audio)
-  4. Settings
+1. Download MP3 (Audio)
+2. Download MP4 (Video)
+3. Convert MP4 (Video) to MP3 (Audio)
+4. Settings
   
-  TIP: To come back to this menu at any time, just type "back".
+TIP: To come back to this menu at any time, just type "back".
 """
 print(welcomeMessage, menu)
 choice = input("Which option would you like to choose(1/2/3/4)?: ")
