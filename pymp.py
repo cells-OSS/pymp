@@ -326,6 +326,7 @@ if choice == '1':
 
 
 if choice == '2':
+    os.system('cls' if os.name == 'nt' else 'clear')
     mp4downloadMenu = """
 ###########################################
         MP4 Download Options
