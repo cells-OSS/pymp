@@ -399,6 +399,7 @@ if choice == '3':
 
 
 if choice == '4':
+    os.system('cls' if os.name == 'nt' else 'clear')
     settingsMenu = """
 ###########################################
             Settings Menu
