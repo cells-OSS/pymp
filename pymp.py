@@ -271,6 +271,7 @@ print(welcomeMessage, menu)
 choice = input("Which option would you like to choose(1/2/3/4)?: ")
 
 if choice == '1':
+    os.system('cls' if os.name == 'nt' else 'clear')
     mp3downloadMenu = """
 ###########################################
         MP3 Download Options
