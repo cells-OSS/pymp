@@ -469,6 +469,7 @@ if choice == '4':
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
     if settings_choice == '4':
+        os.system('cls' if os.name == 'nt' else 'clear')
         figlet_welcome = """
 ######################################
            Figlet Welcome
