@@ -10,6 +10,8 @@ A simple YouTube to mp3/mp4 converter written in [Python](https://www.python.org
 
 [packaging](https://pypi.org/project/packaging/)
 
+ffmpeg
+
 
 # THE HISTORY
 
