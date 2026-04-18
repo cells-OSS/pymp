@@ -292,6 +292,9 @@ if choice == '1':
 
         output_path = input("Enter the output file path (include the name of the file): ")
 
+        if output_path == "":
+            output_path = "~/Downloads/audio"
+
         if output_path.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
@@ -304,6 +307,9 @@ if choice == '1':
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
         output_path = input("Enter the output file path (include the name of the file): ")
+
+        if output_path == "":
+            output_path = "~/Downloads/audio"
 
         if output_path.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
@@ -350,6 +356,9 @@ if choice == '2':
 
         output_path = input("Enter the output file path (include the name of the file): ")
 
+        if output_path == "":
+            output_path = "~/Downloads/video"
+
         if output_path.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
@@ -362,6 +371,9 @@ if choice == '2':
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
         output_path = input("Enter the output file path (include the name of the file): ")
+
+        if output_path == "":
+            output_path = "~/Downloads/video"
 
         if output_path.lower() == "back":
             os.execv(sys.executable, [sys.executable] + sys.argv)
